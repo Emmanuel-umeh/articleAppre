@@ -110,6 +110,7 @@ jQuery("#articlesBody").on("click", ".publishBtn", async function(event){
 });
 
 $('#submitBtn').click(async function(){
+  console.log("clicked submit")
   $("#loader").show();
   const title = ($('#title').val()),
     	  name = ($('#name').val()),
