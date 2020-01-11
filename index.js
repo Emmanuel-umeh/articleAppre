@@ -114,7 +114,7 @@ window.addEventListener('load', async () => {
   $("#loader").hide();
 });
 
-jQuery("#articlesBody").on("click", ".publishBtn", async function(event){
+jQuery("#articlesBody").on("click", ".appreciateBtn", async function(event){
   $("#loader").show();
   let value = $(this).siblings('input').val(),
       index = event.target.id;
@@ -130,7 +130,7 @@ jQuery("#articlesBody").on("click", ".publishBtn", async function(event){
   $("#loader").hide();
 });
 
-$('#submitBtn').click(async function(){
+$('#publishBtn').click(async function(){
   console.log("clicked submit")
   $("#loader").show();
   const title = ($('#title').val()),
