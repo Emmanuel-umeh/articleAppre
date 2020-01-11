@@ -52,16 +52,32 @@ function renderArticles() {
 }
 
 async function callStatic(func, args) {
-  const contract = await client.getContractInstance(contractSource, {publisherAddress});
-  const calledGet = await contract.call(func, args, {callStatic: true}).catch(e => console.error(e));
-  const decodedGet = await calledGet.decode().catch(e => console.error(e));
+  //Create a new contract instance that we can interact with
+  const contract = await client.getContractInstance(contractSource, {
+    contractAddress
+  });
 
+  const calledGet = await contract
+    .call(func, args, {
+      callStatic: true
+    })
+    .catch(e => console.error(e));
+
+  const decodedGet = await calledGet.decode().catch(e => console.error(e));
+  console.log("number of posts : ", decodedGet);
   return decodedGet;
 }
 
 async function contractCall(func, args, value) {
-  const contract = await client.getContractInstance(contractSource, {publisherAddress});
-  const calledSet = await contract.call(func, args, {amount: value}).catch(e => console.error(e));
+  const contract = await client.getContractInstance(contractSource, {
+    contractAddress
+  });
+  //Make a call to write smart contract func, with aeon value input
+  const calledSet = await contract
+    .call(func, args, {
+      amount: value
+    })
+    .catch(e => console.error(e));
 
   return calledSet;
 }
