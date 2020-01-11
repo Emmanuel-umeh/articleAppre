@@ -51,33 +51,37 @@ function renderArticles() {
   $('#articlesBody').html(rendered);
 }
 
-// async function callStatic(func, args) {
-//   const contract = await client.getContractInstance(contractSource, {publisherAddress});
-//   const calledGet = await contract.call(func, args, {callStatic: true}).catch(e => console.error(e));
-//   const decodedGet = await calledGet.decode().catch(e => console.error(e));
+async function callStatic(func, args) {
+  const contract = await client.getContractInstance(contractSource, {publisherAddress});
+  const calledGet = await contract.call(func, args, {callStatic: true}).catch(e => console.error(e));
+  const decodedGet = await calledGet.decode().catch(e => console.error(e));
 
-//   return decodedGet;
-// }
+  return decodedGet;
+}
 
-// async function contractCall(func, args, value) {
-//   const contract = await client.getContractInstance(contractSource, {publisherAddress});
-//   const calledSet = await contract.call(func, args, {amount: value}).catch(e => console.error(e));
+async function contractCall(func, args, value) {
+  const contract = await client.getContractInstance(contractSource, {publisherAddress});
+  const calledSet = await contract.call(func, args, {amount: value}).catch(e => console.error(e));
 
-//   return calledSet;
-// }
+  return calledSet;
+}
 
 window.addEventListener('load', async () => {
   $("#loader").show();
 
   client = await Ae.Aepp();
 
-  contractInstance = await client.getContractInstance(contractSource, {contractAddress});
+  // contractInstance = await client.getContractInstance(contractSource, {contractAddress});
 
-  totalArticles = (await contractInstance.methods.fetchtotalArticles()).decodedResult;
+  // totalArticles = (await contractInstance.methods.fetchtotalArticles()).decodedResult;
+  totalArticles =  await callStatic('fetchtotalArticles', [])
+  console.log(totalArticles)
 
   for (let i = 1; i <= totalArticles; i++) {
 
-    const article = (await contractInstance.methods.fetchArticle(i)).decodedResult;
+    // const article = (await contractInstance.methods.fetchArticle(i)).decodedResult;
+    const article = await callStatic('fetchArticle', [])
+    console.log(article)
 
     articleDetails.push({
       articleTitle     : article.title,
@@ -100,6 +104,7 @@ jQuery("#articlesBody").on("click", ".publishBtn", async function(event){
       index = event.target.id;
 
   await contractInstance.methods.appreciateArticle(index, { amount: value }).catch(console.error);
+  await contractCall('appreciateArticle', [index], value )
 
   const foundIndex = articleDetails.findIndex(article => article.index == event.target.id);
   articleDetails[foundIndex].Amount += parseInt(value, 10);
@@ -117,7 +122,8 @@ $('#submitBtn').click(async function(){
     	  article = ($('#info').val()),
         caption = ($('#caption').val());
 
-  await contractInstance.methods.publishArticle(title, name, article, caption);
+  // await contractInstance.methods.publishArticle(title, name, article, caption);
+  await contractCall('publishArticle', [title, name, article, caption], 0)
 
   articleDetails.push({
     articleTitle: title,
