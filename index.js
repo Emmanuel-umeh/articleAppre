@@ -35,7 +35,7 @@ payable contract ArticleAmount =
     let updatedArticles = state.articles{ [index].appreciatedAmount = updatedappreciatedAmount }
     put(state{ articles = updatedArticles })
 `;
-const contractAddress ='ct_MVbvp3FgJkgKj2YfpvyGuQukPP5SoLAHiEUs8nZCUr8FQCxDY';
+const contractAddress ='ct_iqRZkCaZ8mH2sWXDDynoUw9i9ayMf2JqFg6uWGn8pgUVYuxBh';
 var client = null;
 var articleDetails = [];
 var totalArticles = 0;
@@ -74,30 +74,15 @@ function renderArticles() {
 //   const calledGet = await contract.call(func, args, {callStatic: true}).catch(e => console.error(e));
 //   const decodedGet = await calledGet.decode().catch(e => console.error(e));
 
-  const calledGet = await contract
-    .call(func, args, {
-      callStatic: true
-    })
-    .catch(e => console.error(e));
+//   return decodedGet;
+// }
 
-  const decodedGet = await calledGet.decode().catch(e => console.error(e));
-  console.log("number of posts : ", decodedGet);
-  return decodedGet;
+// async function contractCall(func, args, value) {
+//   const contract = await client.getContractInstance(contractSource, {publisherAddress});
+//   const calledSet = await contract.call(func, args, {amount: value}).catch(e => console.error(e));
 
-
-async function contractCall(func, args, value) {
-  const contract = await client.getContractInstance(contractSource, {
-    contractAddress
-  });
-  //Make a call to write smart contract func, with aeon value input
-  const calledSet = await contract
-    .call(func, args, {
-      amount: value
-    })
-    .catch(e => console.error(e));
-
-  return calledSet;
-}
+//   return calledSet;
+// }
 
 window.addEventListener('load', async () => {
   $("#loader").show();
@@ -130,7 +115,7 @@ jQuery("#articlesBody").on("click", ".appreciateBtn", async function(event){
   $("#loader").show();
   let value = $(this).siblings('input').val();
     index = event.target.id;
-
+console.log( "index of button being clicked "  ,index)
   await contractCall('appreciateArticle', [index], value);
 
   const foundIndex = articleDetails.findIndex(article => article.index == event.target.id);
