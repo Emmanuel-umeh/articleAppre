@@ -38,9 +38,7 @@
                 <div class="col">
                   <input type="text" id="title" class="form-control" placeholder="title">
                 </div>
-                <div class="col">
-                  <input type="text" id="name" class="form-control" placeholder="Your name">
-                </div>
+                
               </div><br>
               <div class="form-group">
                   <textarea type="text" class="form-control" placeholder="Your text" id="info" rows="5"></textarea>
@@ -57,12 +55,11 @@
             
           </div><br>
 
-          <script id="template" type="x-tmpl-mustache">
+          <script id="article" type="x-tmpl-mustache">
             {{#articleDetails}}
               <div id="articledetails">
             <div class="card">
-              <h5 class="card-title">{{articleTitle}}</h5>
-              <small>Uploaded by <STRONG>{{author}}</STRONG></small><br>
+              <h5 class="card-title">{{title}}</h5>
               <hr>
               <div>
                 <p>
@@ -74,7 +71,9 @@
               </div>
               <hr>
               <div class="card-body">
-                <h6 class="card-subtitle mb-2 text-muted"><small style="color: #311B58">Appereciated amount:  </small>{{amount}} ættos</h6>
+                <br>
+                <h6 class="card-subtitle mb-2 text-muted"><small style="color: #311B58">Uploaded Date:  </small>{{date}} ættos</h6>
+                <h6 class="card-subtitle mb-2 text-muted"><small style="color: #311B58">Appereciated amount:  </small>{{Amount}} ættos</h6>
                 <input type="number" class="form-control" placeholder="Amount" id={{index}}>
                 <button class="btn appreciateBtn btn-block" id={{index}}>APPRECIATE</button>
               </div>
@@ -97,6 +96,7 @@
     <script src="index.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mustache.js/3.0.1/mustache.js">
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     
   </body>
